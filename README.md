@@ -12,31 +12,29 @@ Key features:
 
 ![overview](images/overview.png)
 
-## Getting Started
+## Requirements
 
-### Requirements
-
-#### System requirements
+**_System requirement:_**
 
 - **Docker + Docker compose**.
 - **4 GB of RAM minimun** (recommended 8 GB).
 - **2 CPU cores** (recommended 4+ cores).
 - **20 GB of storage** (for persistent data).
 
-#### Necessary ports
+**_Necessary ports:_**
 
 - `80`: HTTP.
 - `443`: HTTPS.
 - `22`: SSH.
 - `5050`: Auxiliar services (e.g. GitLab Registry).
 
-#### Other requirements
+**_Other requirements:_**
 
 - **Local domain or DNS**: For web access (localhost can be used in development).
 - **SMTP server** (Only if you need to send notifications).
 - **SSL certificate** (Only if you use HTTPS).
 
-### How to run it?
+## How to run it?
 
 1. **Clone the repository**, enter the following commands to clone the repository and access the directory that contains the files with the configurations needed to run the service.
 
@@ -53,14 +51,14 @@ Key features:
    docker compose up -d
    ```
 
+   > [!note]
+   > Once the container is running, you can check the status of the services using `docker container ps`.
+
+4. When the container is running, access to GitLab using the URL specified in `GITLAB_EXTERNAL_URL` in the **.env** file, for example: <https://git.example.com>.
+
 > [!note]
-> Once the container is running, you can check the status of the services using `docker container ps`.
-
-### Access to GitLab
-
-When the container is running, access to GitLab using the URL specified in `external_url option` in the **gitlab.rb** file, for example: <https://git.example.com>.
-
-Now, login using the credentials specified in `gitlab_rails['initial_root_password']` option in the previous file.
+> The initial user is `root`, and the password is automatically generated. To obtain it, run: `docker exec -it gitlab-ce grep 'Password:' /etc/gitlab/initial_root_password`.
+> Remember to change this **root password** immediately after logging in to avoid security issues.
 
 ---
 
