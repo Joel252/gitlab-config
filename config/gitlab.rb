@@ -95,3 +95,6 @@ pages_external_url ENV['GITLAB_PAGES_URL']
 gitlab_pages['enable'] = true
 gitlab_pages['external_http'] = ['0.0.0.0:80'] unless ENV['ENABLE_SSL'] == "true"
 gitlab_pages['external_https'] = ['0.0.0.0:443'] if ENV['ENABLE_SSL']  == "true"
+
+# --- Register Token ---
+gitlab_rails['initial_shared_runners_registration_token'] = ENV['GITLAB_RUNNER_TOKEN']

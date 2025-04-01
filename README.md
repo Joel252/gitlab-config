@@ -59,6 +59,7 @@ Key features:
 > [!note]
 > The initial user is `root`, and the password is automatically generated. To obtain it, run: `docker exec -it gitlab-ce grep 'Password:' /etc/gitlab/initial_root_password`.
 > Remember to change this **root password** immediately after logging in to avoid security issues.
+> You also need to reset the runners' **register token**.
 
 ---
 
