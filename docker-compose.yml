@@ -1,33 +1,20 @@
 services:
   gitlab:
     image: gitlab/gitlab-ce:${GITLAB_VERSION} # Use the GitLab Edition image
-    restart: always # Always restart the container if it stops
-    env_file:
-      - .env
+    restart: always                           # Always restart the container if it stop
     container_name: gitlab-ce
     hostname: "${GITLAB_DOMAIN}"
+    env_file:
+      - .env
     ports:
-      - "80:80" # HTTP
-      - "443:443" # HTTPS
-      - "22:22" # SSH
-
+      - "80:80"     # HTTP
+      - "443:443"   # HTTPS
+      - "22:22"     # SSH
+      - "5050:5050" # GitLab Registry
+      - "8090:8090" # GitLab Pages
     volumes:
       - /mnt/gitlab/config:/etc/gitlab
       - /mnt/gitlab/logs:/var/log/gitlab
       - /mnt/gitlab/data:/var/opt/gitlab
-      - ./config/gitlab.rb:/etc/gitlab/gitlab.rb # Mount external gitlab setup
-
-  gitlab-runner:
-    image: gitlab/gitlab-runner:alpine
-    restart: always
-    env_file:
-      - .env
-    container_name: gitlab-runner
-    network_mode: 'host'
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /mnt/gitlab/config/ssl:/etc/gitlab-runner/certs
-    environment:
-      - GITLAB_DOMAIN=${GITLAB_DOMAIN}
-      - GITLAB_RUNNER_TOKEN=${GITLAB_RUNNER_TOKEN}
-    entrypoint: ["/bin/bash", "/config/runner.sh"]
+      - /mnt/gitlab/certs:/etc/gitlab/ssl         # Volume to SSL certificates
+      - ./config/gitlab.rb:/etc/gitlab/gitlab.rb  # Mount external gitlab config
