@@ -1,0 +1,23 @@
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    restart: always
+    container_name: gitlab
+    hostname: "gitlab.example.com"
+    env_file:
+      - .env
+    ports:
+      - "80:80"
+      - "443:443"
+      - "22:22"
+      - "8443:8443"
+    volumes:
+      - gitlab-config:/etc/gitlab
+      - gitlab-logs:/var/log/gitlab
+      - gitlab-data:/var/opt/gitlab
+      - ./config/gitlab.rb:/etc/gitlab/gitlab.rb
+
+volumes:
+  gitlab-config:
+  gitlab-logs:
+  gitlab-data:
