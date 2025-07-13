@@ -14,9 +14,9 @@ fi
 TOKEN=$(curl -s -X POST "${GITLAB_URL}/api/v4/user/runners" \
   -H "PRIVATE-TOKEN: ${ADMIN_PAT}" \
   -d "runner_type=instance_type" \
-  -d "description=shared-runner-auto" \
-  -d "tag_list=shared,ci" \
-  -d "run_untagged=true" | jq -r '.token')
+  -d "description=shared-runner" \
+  -d "tag_list=${TAGS}" \
+  -d "run_untagged=${RUN_UNTAGGED}" | jq -r '.token')
 
 if [ -z "$TOKEN" ]; then
   echo "Failed to retrieve runner token."
@@ -30,9 +30,9 @@ gitlab-runner register \
   --token "${TOKEN}" \
   --executor "docker" \
   --docker-image alpine:latest \
-  --description "shared-runner-auto" \
-  --tag-list "shared,ci" \
-  --run-untagged="true" \
+  --description "shared-runner" \
+  --tag-list "${TAGS}" \
+  --run-untagged="${RUN_UNTAGGED}" \
   --locked="false" \
   --access-level="not_protected" \
   --docker-privileged \
