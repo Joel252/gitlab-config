@@ -36,7 +36,7 @@ If you are using a firewall, ensure to allow traffic for these ports:
 Before you begin, clone the repository and navigate to the project directory:
 
 ```bash
-git clone https://Joel252/gitlab-config.git
+git clone https://github.com/Joel252/gitlab-config.git
 
 cd gitlab-config/
 ```
